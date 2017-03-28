@@ -4,17 +4,33 @@
             <a :href="item.url">{{ item.name }}</a>
         </li>
     </ul>
+    <ul id="dropdown-logout" class="dropdown-content">
+        <li>
+            <a :href="config.urlLogout" @click.prevent="goToLogout()">Sair</a>
+            <form id="logout-form" :action="config.urlLogout" method="POST" style="display: none;">
+                <input type="hidden" name="_token" :value="config.csrfToken"/>
+            </form>
+        </li>
+    </ul>
     <div class="navbar-fixed">
         <nav>
-            <div class="nav-wrapper container">
-                <a href="#" class="right brand-logo">Code Contas</a>
-                <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-                <ul class="left hide-on-med-and-down">
-                    <li v-for="o in config.menus">
-                        <a href="!#" v-if="o.dropdownId" class="dropdown-button" :data-activates="o.dropdownId">{{ o.name }} <i class="material-icons right">arrow_drop_down</i> </a>
-                        <a v-else :href="o.url">{{ o.name }}</a>
-                    </li>
-                </ul>
+            <div class="nav-wrapper">
+                <div class="col s12">
+                    <a href="#" class="left brand-logo">Code Fin. Admin</a>
+                    <a href="#" data-activates="nav-mobile" class="button-collapse"><i
+                            class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li v-for="o in config.menus">
+                            <a href="!#" v-if="o.dropdownId" class="dropdown-button" :data-activates="o.dropdownId">{{
+                                o.name }} <i class="material-icons right">arrow_drop_down</i> </a>
+                            <a v-else :href="o.url">{{ o.name }}</a>
+                        </li>
+                        <li>
+                            <a href="!#" class="dropdown-button" data-activates="dropdown-logout">{{ config.name }} <i
+                                    class="material-icons right">arrow_drop_down</i> </a>
+                        </li>
+                    </ul>
+                </div>
                 <ul id="nav-mobile" class="side-nav">
                     <li v-for="o in config.menus">
                         <a href="#" :href="o.url">{{ o.name }}</a>
@@ -32,7 +48,7 @@
             config: {
                 type: Object,
                 default(){
-                    return{
+                    return {
                         name: '',
                         menus: [],
                         menusDropdown: [],
@@ -45,30 +61,10 @@
             $('.button-collapse').sideNav();
             $('.dropdown-button').dropdown();
         },
-        data(){
-            return {
-                menus: [
-                    {id: 0, name: "Dashboard", routeName: 'bill.dashboard'},
-                    {name: "Contas a pagar", routeName: 'bill-pay.list', dropdownId: 'bill-pay'},
-                    {name: "Contas a receber", routeName: 'bill-receive.list', dropdownId: 'bill-receive'}
-                ],
-                menusDropdown: [
-                    {
-                        id: 'bill-pay', items: [
-                        {id: 0, name: "Listar contas", routeName: 'bill-pay.list'},
-                        {id: 1, name: "Criar conta", routeName: 'bill-pay.create'}
-                    ]
-                    },
-                    {
-                        id: 'bill-receive', items: [
-                        {id: 0, name: "Listar contas", routeName: 'bill-receive.list'},
-                        {id: 1, name: "Criar conta", routeName: 'bill-receive.create'}
-                    ]
-                    }
-
-
-                ]
-            };
+        methods: {
+            goToLogout(){
+                $('#logout-form').submit();
+            }
         }
     };
 </script>

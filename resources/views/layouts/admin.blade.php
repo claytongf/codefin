@@ -22,95 +22,52 @@
 </head>
 <body>
 <div id="app">
-    @if (Auth::guest())
-        <?php
-        $menuConfig = [
-            'name' => Auth::user()->name,
-            'menus' => [
-                ['name' => 'Contas a pagar', 'url' => '/teste', 'dropdownId' => 'teste'],
-                ['name' => 'Contas a receber', 'url' => '/teste1', 'dropdownId' => 'teste1']
-            ],
-            'menusDropdown' => [
-                [
-                    'id' => 'teste',
-                    'items' => [
-                        ['name' => "Listar contas", "url" => '/listar'],
-                        ['name' => "Criar conta", 'url' => '/criar']
+    <header>
+        @if (Auth::check())
+            <?php
+            $menuConfig = [
+                'name' => Auth::user()->name,
+                'menus' => [
+                    ['name' => 'Contas a pagar', 'url' => '/teste', 'dropdownId' => 'teste'],
+                    ['name' => 'Contas a receber', 'url' => '/teste1', 'dropdownId' => 'teste1']
+                ],
+                'menusDropdown' => [
+                    [
+                        'id' => 'teste',
+                        'items' => [
+                            ['name' => "Listar contas", "url" => '/listar'],
+                            ['name' => "Criar conta", 'url' => '/criar']
+                        ]
+                    ],
+                    [
+                        'id' => 'teste1',
+                        'items' => [
+                            ['name' => "Listar contas", "url" => 'bill-pay.list'],
+                            ['name' => "Criar conta", 'url' => 'bill-pay.create']
+                        ]
                     ]
                 ],
-                [
-                    'id' => 'teste1',
-                    'items' => [
-                        ['name' => "Listar contas", "url" => 'bill-pay.list'],
-                        ['name' => "Criar conta", 'url' => 'bill-pay.create']
-                    ]
-                ]
-            ]
-        ];
+                'urlLogout' => env('URL_ADMIN_LOGOUT'),
+                'csrfToken' => csrf_token()
+            ];
 
-        ?>
-        <admin-menu :config="{{ json_encode($menuConfig) }}"></admin-menu>
-    @endif
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    &nbsp;
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ env('URL_ADMIN_LOGIN') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ env('URL_ADMIN_LOGOUT') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-
-                                    <form id="logout-form" action="{{ env('URL_ADMIN_LOGOUT') }}" method="POST"
-                                          style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
+            ?>
+            <admin-menu :config="{{ json_encode($menuConfig) }}"></admin-menu>
+        @endif
+    </header>
+    <main>
+        @yield('content')
+    </main>
+    <footer class="page-footer">
+        <div class="footer-copyright">
+            <div class="container">
+                @ {{ date('Y') }} <a class="grey-text lext-lighten-4" href="#">Code</a>
             </div>
         </div>
-    </nav>
+    </footer>
 
-    @yield('content')
+
+
 </div>
 
 <!-- Scripts -->

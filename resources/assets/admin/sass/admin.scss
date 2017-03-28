@@ -1,8 +1,20 @@
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Material+Icons);
 
+// Materialize CSS
+@import "node_modules/materialize-css/sass/components/color";
+
 // Variables
 @import "variables";
 
 // Materialize CSS
 @import "node_modules/materialize-css/sass/materialize";
+
+#app{
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+main{
+  flex: 1 0 auto;
+}
