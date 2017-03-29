@@ -9943,7 +9943,7 @@ var __vue_script__, __vue_template__
 var __vue_styles__ = {}
 __vue_script__ = __webpack_require__(3)
 if (Object.keys(__vue_script__).some(function (key) { return key !== "default" && key !== "__esModule" })) {
-  console.warn("[vue-loader] resources/assets/admin/js/components/Example.vue: named exports in *.vue files are ignored.")}
+  console.warn("[vue-loader] resources/assets/admin/js/components/Dashboard.vue: named exports in *.vue files are ignored.")}
 __vue_template__ = __webpack_require__(6)
 module.exports = __vue_script__ || {}
 if (module.exports.__esModule) module.exports = module.exports.default
@@ -9960,7 +9960,7 @@ if (false) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), false)
   if (!hotAPI.compatible) return
-  var id = "_v-11f574e9/Example.vue"
+  var id = "_v-11f574e9/Dashboard.vue"
   if (!module.hot.data) {
     hotAPI.createRecord(id, module.exports)
   } else {
