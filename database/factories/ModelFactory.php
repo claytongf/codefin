@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(CodeFin\User::class, function (Faker\Generator $faker) {
+$factory->define(\CodeFin\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -23,8 +23,15 @@ $factory->define(CodeFin\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->state(\CodeFin\User::class, 'admin', function (Faker\Generator $faker) {
+$factory->state(\CodeFin\Models\User::class, 'admin', function (Faker\Generator $faker) {
     return [
-        'role' => \CodeFin\User::ROLE_ADMIN
+        'role' => \CodeFin\Models\User::ROLE_ADMIN
+    ];
+});
+
+$factory->define(\CodeFin\Models\Bank::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'logo' => md5(time()).'.jpeg'
     ];
 });

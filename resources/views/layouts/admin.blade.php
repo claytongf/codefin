@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/admin.custom.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -28,25 +29,9 @@
             $menuConfig = [
                 'name' => Auth::user()->name,
                 'menus' => [
-                    ['name' => 'Contas a pagar', 'url' => '/teste', 'dropdownId' => 'teste'],
-                    ['name' => 'Contas a receber', 'url' => '/teste1', 'dropdownId' => 'teste1']
+                    ['name' => 'Banco', 'url' => route('admin.banks.index')]
                 ],
-                'menusDropdown' => [
-                    [
-                        'id' => 'teste',
-                        'items' => [
-                            ['name' => "Listar contas", "url" => '/listar'],
-                            ['name' => "Criar conta", 'url' => '/criar']
-                        ]
-                    ],
-                    [
-                        'id' => 'teste1',
-                        'items' => [
-                            ['name' => "Listar contas", "url" => 'bill-pay.list'],
-                            ['name' => "Criar conta", 'url' => 'bill-pay.create']
-                        ]
-                    ]
-                ],
+                'menusDropdown' => [],
                 'urlLogout' => env('URL_ADMIN_LOGOUT'),
                 'csrfToken' => csrf_token()
             ];
@@ -72,5 +57,7 @@
 
 <!-- Scripts -->
 <script src="{{ asset('build/admin.bundle.js') }}"></script>
+<script src="{{ asset('build/admin.js') }}"></script>
+@yield('post-script')
 </body>
 </html>

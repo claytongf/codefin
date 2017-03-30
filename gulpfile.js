@@ -8,6 +8,7 @@ const mergeWebpack = require('webpack-merge');
 const env = require('gulp-env');
 const stringifyObject = require('stringify-object');
 const file = require('gulp-file');
+const HOST = "0.0.0.0";
 
 // require('laravel-elixir-vue');
 // require('laravel-elixir-webpack-official');
@@ -69,6 +70,8 @@ elixir((mix) => {
     mix.sass('./resources/assets/admin/sass/spa.scss')
         .sass('./resources/assets/spa/sass/spa.scss')
         .copy('./node_modules/materialize-css/fonts/roboto','./public/fonts/roboto');
+    mix.styles(['./node_modules/sweetalert2/dist/sweetalert.css'], 'public/css/admin.custom.css');
+    mix.scripts(['./node_modules/sweetalert2/dist/sweetalert.js'], 'public/build/admin.js')
     gulp.start('spa-config', 'webpack-dev-server');
     mix.browserSync({
         host: '0.0.0.0',
