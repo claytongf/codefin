@@ -62,7 +62,6 @@ class BanksController extends Controller
     public function store(BankCreateRequest $request)
     {
         $data = $request->all();
-        $data['logo'] = md5(time()) . '.jpeg';
         $this->repository->create($data);
 //            if ($request->wantsJson()) {
 //                $response = [
@@ -103,6 +102,7 @@ class BanksController extends Controller
      */
     public function update(BankUpdateRequest $request, $id)
     {
+        $request->file('logo');
         $bank = $this->repository->update($request->all(), $id);
 //        if ($request->wantsJson()) {
 //            $response = [
@@ -126,12 +126,16 @@ class BanksController extends Controller
      */
     public function destroy($id)
     {
-        try{
-            $bank = $this->repository->find($id);
-            $bank->delete();
-            return ["response_message"=>"Sucesso!", "message"=>"Produto \"{$bank->name}\" foi deletado com sucesso","response"=>"success"];
-        }catch(ModelNotFoundException $e){
-            return ["response_message"=>"Erro!", "message"=>"Produto não existe no sistema", "response"=>"error"];
+        $deleted = $this->repository->delete($id);
+
+        if (request()->wantsJson()) {
+
+            return response()->json([
+                'message' => 'Bank deleted.',
+                'deleted' => $deleted,
+            ]);
         }
+
+        return redirect()->back()->with('message', 'Bank deleted.');
     }
 }

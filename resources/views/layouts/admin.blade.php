@@ -12,7 +12,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/admin.custom.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -29,13 +28,29 @@
             $menuConfig = [
                 'name' => Auth::user()->name,
                 'menus' => [
-                    ['name' => 'Banco', 'url' => route('admin.banks.index')]
+                    ['name' => 'Banco', 'url' => route('admin.banks.index'), 'active' => isRouteActive('admin.banks.index')],
+                    ['name' => 'Contas a Pagar', 'dropdownId' => 'teste']
                 ],
-                'menusDropdown' => [],
+                'menusDropdown' => [
+                    [
+                        'id' => 'teste',
+                        'items' => [
+                            [
+                                'name' => 'Banco',
+                                'url' => route('admin.banks.index'),
+                                'active' => isRouteActive('admin.banks.edit')
+                            ],
+                            [
+                                'name' => 'Banco Edit',
+                                'url' => route('admin.banks.index'),
+                                'active' => isRouteActive('admin.banks.edit')
+                            ]
+                        ]
+                    ]
+                ],
                 'urlLogout' => env('URL_ADMIN_LOGOUT'),
                 'csrfToken' => csrf_token()
             ];
-
             ?>
             <admin-menu :config="{{ json_encode($menuConfig) }}"></admin-menu>
         @endif
@@ -52,12 +67,9 @@
     </footer>
 
 
-
 </div>
 
 <!-- Scripts -->
 <script src="{{ asset('build/admin.bundle.js') }}"></script>
-<script src="{{ asset('build/admin.js') }}"></script>
-@yield('post-script')
 </body>
 </html>

@@ -15,11 +15,43 @@
                 <tbody>
                 @foreach($banks as $bank)
                     <tr>
-                        <td>{{ $bank->id }}</td>
-                        <td>{{ $bank->name }}</td>
                         <td>
-                            <a href="{{ route('admin.banks.edit', ['bank' => $bank->id]) }}" class="btn waves-effect blue-grey darken-2">Editar</a>
-                            <a data-href="{{route('admin.banks.destroy', $bank->id)}}" data-id="{{$bank->id}}" data-name="{{ $bank->name }}" class="btn waves-effect red darken-4 clickButton">Excluir</a>
+                            <div class="row valign-wrapper">
+                                <div class="col s12">{{ $bank->id }}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row valign-wrapper">
+                                <div class="col s2"><img src="{{asset("storage/banks/images/{$bank->logo}")}}" class="bank-logo"/></div>
+                                <div class="col s10">
+                                    <span class="left">{{$bank->name}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row valign-wrapper">
+                                <div class="col s12">
+                                    <a href="{{ route('admin.banks.edit', ['bank' => $bank->id]) }}" class="btn waves-effect blue-grey darken-2">Editar</a>
+                                    <delete-action action="{{ route('admin.banks.destroy', ['bank' => $bank->id]) }}" action-element="link-delete-{{$bank->id}}" csrf-token="{{csrf_token()}}">
+                                        <?php $modalId = "modal-delete-{$bank->id}"; ?>
+                                        <a id="link-modal-{{$bank->id}}" href="#{{$modalId}}" class="btn waves-effect red darken-4">Excluir</a>
+                                        <modal :modal="{{json_encode(['id' => "{$modalId}"])}}" style="display: none;">
+                                            <div slot="content">
+                                                <h5>Confirmação</h5>
+                                                <p><strong>Deseja excluir esse banco?</strong></p>
+                                                <div class="divider"></div>
+                                                <p>Nome: <strong>{{$bank->name}}</strong></p>
+                                                <div class="divider"></div>
+                                            </div>
+                                            <div slot="footer">
+                                                <button class="btn btn-flat waves-effect green lighten-2 modal-close modal-action"  id="link-delete-{{$bank->id}}">OK</button>
+                                                <button class="btn btn-flat waves-effect waves-red red modal-close modal-action">Cancelar</button>
+                                            </div>
+                                        </modal>
+                                    </delete-action>
+                                </div>
+                            </div>
+
                         </td>
                     </tr>
                 @endforeach
@@ -28,7 +60,4 @@
             {!! $banks->links() !!}
         </div>
     </div>
-@endsection
-@section('post-script')
-    @include('admin.banks._ajax')
 @endsection

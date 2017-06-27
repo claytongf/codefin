@@ -67,11 +67,9 @@ gulp.task('webpack-dev-server', () => {
 });
 
 elixir((mix) => {
-    mix.sass('./resources/assets/admin/sass/spa.scss')
+    mix.sass('./resources/assets/admin/sass/admin.scss')
         .sass('./resources/assets/spa/sass/spa.scss')
         .copy('./node_modules/materialize-css/fonts/roboto','./public/fonts/roboto');
-    mix.styles(['./node_modules/sweetalert2/dist/sweetalert.css'], 'public/css/admin.custom.css');
-    mix.scripts(['./node_modules/sweetalert2/dist/sweetalert.js'], 'public/build/admin.js')
     gulp.start('spa-config', 'webpack-dev-server');
     mix.browserSync({
         host: '0.0.0.0',
