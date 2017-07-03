@@ -2,6 +2,7 @@
 
 namespace CodeFin\Http\Controllers\Api;
 
+use CodeFin\Criteria\FindByNameCriteria;
 use CodeFin\Http\Controllers\Controller;
 use CodeFin\Http\Controllers\Response;
 use Illuminate\Http\Request;
@@ -36,7 +37,8 @@ class BankAccountsController extends Controller
      */
     public function index()
     {
-        $bankAccounts = $this->repository->all();
+        $this->repository->pushCriteria(new FindByNameCriteria());
+        $bankAccounts = $this->repository->paginate();
 
         return $bankAccounts;
 
@@ -52,7 +54,7 @@ class BankAccountsController extends Controller
     public function store(BankAccountCreateRequest $request)
     {
         $bankAccount = $this->repository->create($request->all());
-        return response()->json($bankAccount->toArray(), 201);
+        return response()->json($bankAccount, 201);
     }
 
 
@@ -66,7 +68,7 @@ class BankAccountsController extends Controller
     public function show($id)
     {
         $bankAccount = $this->repository->find($id);
-        return response()->json($bankAccount->toArray());
+        return response()->json($bankAccount);
     }
 
     /**
@@ -80,7 +82,7 @@ class BankAccountsController extends Controller
     public function update(BankAccountUpdateRequest $request, $id)
     {
         $bankAccount = $this->repository->update($request->all(), $id);
-        return response()->json($bankAccount->toArray());
+        return response()->json($bankAccount);
     }
 
 
