@@ -37,7 +37,7 @@ class BankAccountsController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(new FindByNameCriteria());
+//        $this->repository->pushCriteria(new FindByNameCriteria());
         $bankAccounts = $this->repository->paginate();
 
         return $bankAccounts;
@@ -68,7 +68,7 @@ class BankAccountsController extends Controller
     public function show($id)
     {
         $bankAccount = $this->repository->find($id);
-        return response()->json($bankAccount);
+        return response()->json($bankAccount, 200);
     }
 
     /**

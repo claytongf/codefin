@@ -2,9 +2,9 @@
     <div class="container">
         <div class="row">
 
-        <span class="green-text text-darken-2">
+        <page-title>
             <h5>Minhas contas bancárias</h5>
-        </span>
+        </page-title>
 
             <div class="card-panel z-depth-5">
                 <table class="bordered striped hightlight responsive-table">
@@ -61,10 +61,12 @@
     import {BankAccount} from '../../services/resources';
     import ModalComponent from '../../../../_default/components/Modal.vue';
     import PaginationComponent from '../Pagination.vue';
+    import PageTitleComponent from '../../../../_default/components/PageTitle.vue';
     export default{
         components: {
             'modal': ModalComponent,
             'pagination': PaginationComponent,
+            'page-title': PageTitleComponent,
         },
         data(){
             return {
