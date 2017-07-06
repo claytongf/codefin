@@ -26,15 +26,18 @@ export default {
         subRoutes: {
             '/': {
                 name: 'bank-account.list',
-                component: BankAccountListComponent
+                component: BankAccountListComponent,
+                auth: true
             },
             '/create': {
                 name: 'bank-account.create',
-                component: BankAccountCreateComponent
+                component: BankAccountCreateComponent,
+                auth: true
             },
             '/:id/update': {
                 name: 'bank-account.update',
-                component: BankAccountUpdateComponent
+                component: BankAccountUpdateComponent,
+                auth: true
             },
         }
     }
